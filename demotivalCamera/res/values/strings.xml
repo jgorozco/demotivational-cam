@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, demotivalcam!</string>
+    <string name="app_name">demotival camera</string>
+    <string name="fail_instructions">first capture, then edit</string>
+    <string name="fail_title">FAIL</string>
+    <string name="fail_context">write here</string>
+</resources>
