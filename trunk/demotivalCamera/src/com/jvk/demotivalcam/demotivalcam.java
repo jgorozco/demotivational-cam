@@ -36,9 +36,9 @@ import com.admob.android.ads.AdManager;
 import com.admob.android.ads.AdView;
 
 public class demotivalcam extends Activity  {
-	private static final String SDCARD_TEMP_JPG = "/mnt/sdcard/DCIM/Camera/temp_demotival.jpg";
-	private static final String FINAL_IMA_PATH = "/mnt/sdcard/DCIM/Camera/last_demotival.png";
-	private static final String SDCARD_DIR = "/mnt/sdcard/DCIM/Camera";
+	private static final String SDCARD_TEMP_JPG = "/mnt/sdcard/DCIM/temp_demotival.jpg";
+	private static final String FINAL_IMA_PATH = "/mnt/sdcard/DCIM/last_demotival.png";
+	private static final String SDCARD_DIR = "/mnt/sdcard/DCIM";
 	/** Called when the activity is first created. */
 	Camera camera=null;
 	public Preview preview;
@@ -53,7 +53,7 @@ public class demotivalcam extends Activity  {
 	private FrameLayout flay;
 	private EditText title;
 	private EditText subtitle;
-	private ProgressDialog waitingDialog;
+	private ProgressDialog waitingDialog=null;
 
 	private OnClickListener listenerCapture;
 	private OnClickListener listenerSave;
@@ -68,9 +68,9 @@ public class demotivalcam extends Activity  {
 		requestWindowFeature(Window.FEATURE_NO_TITLE); 
 		setContentView(R.layout.main);
 		assignXML();
-		AdManager.setTestDevices( new String[] {
+	/*	AdManager.setTestDevices( new String[] {
 				AdManager.TEST_EMULATOR
-				} );
+				} );*/
 		AdView add=(AdView) findViewById(R.id.ad);
 		add.requestFreshAd();
 		initListeners();
@@ -144,7 +144,7 @@ public class demotivalcam extends Activity  {
 	}
 		
 	
-	public Bitmap overlay(Bitmap bmp1, Bitmap bmp2) {
+	/*public Bitmap overlay(Bitmap bmp1, Bitmap bmp2) {
         Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
         Canvas canvas = new Canvas(bmOverlay);
         canvas.drawBitmap(bmp1, new Matrix(), null);
@@ -165,7 +165,7 @@ public class demotivalcam extends Activity  {
         Bitmap newbm=Bitmap.createBitmap(bmp2, x, y, min, min);
         canvas.drawBitmap(newbm, m, null);
         return bmOverlay;
-    }
+    }*/
 	
 	private void initListeners() {
 		listenerCapture=new OnClickListener() {
@@ -308,6 +308,11 @@ public class demotivalcam extends Activity  {
 		ShowPreview();
 		if (waitingDialog!=null)waitingDialog.dismiss();
 		if(camera==null)	camera = Camera.open();
+		else
+		{
+			camera.release();
+			camera.open();
+		}
 		preview.setCamera(camera);
 	}
 
