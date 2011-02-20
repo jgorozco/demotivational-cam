@@ -40,7 +40,7 @@ public class demotivalcam extends Activity  {
 	private static final String FINAL_IMA_PATH = "/mnt/sdcard/DCIM/Camera/last_demotival.png";
 	private static final String SDCARD_DIR = "/mnt/sdcard/DCIM/Camera";
 	/** Called when the activity is first created. */
-	Camera camera;
+	Camera camera=null;
 	public Preview preview;
 	private ImageView   previewimg;
 	private ImageButton capture;
@@ -307,14 +307,14 @@ public class demotivalcam extends Activity  {
 		super.onResume();
 		ShowPreview();
 		if (waitingDialog!=null)waitingDialog.dismiss();
-		camera = Camera.open();
+		if(camera==null)	camera = Camera.open();
 		preview.setCamera(camera);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		waitingDialog.dismiss();
+		if (waitingDialog!=null)waitingDialog.dismiss();
 		if (camera != null) {
 			preview.setCamera(null);
 			camera.release();
