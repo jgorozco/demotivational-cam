@@ -4,5 +4,5 @@
     <string name="app_name">demotival camera</string>
     <string name="fail_instructions">first capture, then edit</string>
     <string name="fail_title">FAIL</string>
-    <string name="fail_context">write here</string>
+    <string name="fail_context">write here the description of the e pic win or epic fail</string>
 </resources>

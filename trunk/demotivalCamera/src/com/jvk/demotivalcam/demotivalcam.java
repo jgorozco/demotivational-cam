@@ -12,7 +12,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Bitmap.CompressFormat;
 import android.hardware.Camera;
@@ -24,6 +23,7 @@ import android.text.InputType;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.widget.AbsoluteLayout;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -32,7 +32,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ImageView.ScaleType;
 
-import com.admob.android.ads.AdManager;
 import com.admob.android.ads.AdView;
 
 public class demotivalcam extends Activity  {
@@ -95,18 +94,22 @@ public class demotivalcam extends Activity  {
 	}
 
 
-
+    public void myClickHandler(View target) {
+        EditText m=(EditText) target;
+        m.setText("");
+    }
+	
 	public void ShowImage()
 	{
 		
-		title.setBackgroundColor(0x00ff00);
+/*		title.setBackgroundColor(0x00ff00);
 		title.setFocusable(true);
 		title.setFocusableInTouchMode(true);
 		title.setInputType(InputType.TYPE_CLASS_TEXT);
 		subtitle.setInputType(InputType.TYPE_CLASS_TEXT);
 		subtitle.setFocusable(true);
 		subtitle.setFocusableInTouchMode(true);
-		subtitle.setText(R.string.fail_context);
+		subtitle.setText(R.string.fail_context);*/
 		previewimg.setVisibility(View.VISIBLE);
 		flay.setVisibility(View.GONE);
 		
@@ -135,12 +138,12 @@ public class demotivalcam extends Activity  {
 		title.setBackgroundColor(0x000000);
 		previewimg.setVisibility(View.GONE);
 		flay.setVisibility(View.VISIBLE);
-		title.setFocusable(false);
+	/*	title.setFocusable(false);
 		subtitle.setFocusable(false);
 		title.setFocusableInTouchMode(false);
 		subtitle.setFocusableInTouchMode(false);
 		subtitle.setText(R.string.fail_instructions);
-		
+		*/
 	}
 		
 	
