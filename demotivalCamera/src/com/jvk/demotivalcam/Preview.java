@@ -16,7 +16,7 @@ class Preview extends SurfaceView implements SurfaceHolder.Callback {
 	private static final String TAG = "Preview";
 
 	SurfaceHolder mHolder;
-	public Camera camera;
+	public Camera camera=null;
 
 	
 	public int scuareW;
@@ -62,21 +62,21 @@ class Preview extends SurfaceView implements SurfaceHolder.Callback {
 		// Now that the size is known, set up the camera parameters and begin
 		// the preview.
 		Camera.Parameters parameters = camera.getParameters();
-		camera.getParameters().setJpegQuality(50);
-		camera.getParameters().setFlashMode(Camera.Parameters.FLASH_MODE_AUTO);
+		parameters.setJpegQuality(50);
+		parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+	//	parameters.setFlashMode(Camera.Parameters.FLASH_MODE_AUTO);
 	//	parameters.setPreviewSize(w, h);
 	//	parameters.setPictureSize(w, h);
 		camera.setParameters(parameters);
 
 	//	parameters.set("rotation", 270); 
 	//	parameters.setRotation(270);
-		camera.setParameters(parameters);
+	//	camera.setParameters(parameters);
 		camera.startPreview();
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		Log.d("camvas", "rotate!");
 		canvas.rotate(90);
 		super.onDraw(canvas);
 	}

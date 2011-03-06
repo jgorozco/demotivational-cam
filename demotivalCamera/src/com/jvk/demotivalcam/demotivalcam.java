@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.Timestamp;
+import java.util.Calendar;
 
 import android.R.drawable;
 import android.app.Activity;
@@ -19,17 +21,16 @@ import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
-import android.widget.AbsoluteLayout;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import android.widget.ImageView.ScaleType;
 
 import com.admob.android.ads.AdView;
@@ -51,7 +52,7 @@ public class demotivalcam extends Activity  {
 	private RelativeLayout allView;
 	private FrameLayout flay;
 	private EditText title;
-	private EditText subtitle;
+//	private EditText subtitle;
 	private ProgressDialog waitingDialog=null;
 
 	private OnClickListener listenerCapture;
@@ -101,20 +102,10 @@ public class demotivalcam extends Activity  {
 	
 	public void ShowImage()
 	{
-		
-/*		title.setBackgroundColor(0x00ff00);
-		title.setFocusable(true);
-		title.setFocusableInTouchMode(true);
-		title.setInputType(InputType.TYPE_CLASS_TEXT);
-		subtitle.setInputType(InputType.TYPE_CLASS_TEXT);
-		subtitle.setFocusable(true);
-		subtitle.setFocusableInTouchMode(true);
-		subtitle.setText(R.string.fail_context);*/
+
 		previewimg.setVisibility(View.VISIBLE);
 		flay.setVisibility(View.GONE);
-		
 		Bitmap bm=BitmapFactory.decodeFile(SDCARD_TEMP_JPG);
-		Matrix m=new Matrix();
 	    float scaleWidth = ((float) flay.getWidth()) / bm.getWidth();
 	    float scaleHeight = ((float) flay.getHeight()) / bm.getHeight();
 
@@ -138,91 +129,71 @@ public class demotivalcam extends Activity  {
 		title.setBackgroundColor(0x000000);
 		previewimg.setVisibility(View.GONE);
 		flay.setVisibility(View.VISIBLE);
-	/*	title.setFocusable(false);
-		subtitle.setFocusable(false);
-		title.setFocusableInTouchMode(false);
-		subtitle.setFocusableInTouchMode(false);
-		subtitle.setText(R.string.fail_instructions);
-		*/
 	}
-		
-	
-	/*public Bitmap overlay(Bitmap bmp1, Bitmap bmp2) {
-        Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
-        Canvas canvas = new Canvas(bmOverlay);
-        canvas.drawBitmap(bmp1, new Matrix(), null);
-        Matrix m=new Matrix();
-        m.postRotate(90);
- //       m.postScale(0.17f, 0.175f);
- //       m.postTranslate(290.0f, 32.0f);
-        int min=Math.min(bmp2.getWidth(), bmp2.getHeight());
-        int x=0;
-        int y=0;
-        if (bmp2.getWidth()>bmp2.getHeight())
-        {
-        	x=bmp2.getWidth()-bmp2.getHeight();
-        }else
-        {
-        	y=bmp2.getHeight()-bmp2.getWidth();
-        }
-        Bitmap newbm=Bitmap.createBitmap(bmp2, x, y, min, min);
-        canvas.drawBitmap(newbm, m, null);
-        return bmOverlay;
-    }*/
-	
+			
 	private void initListeners() {
 		listenerCapture=new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				showDialog(0);
-				camera.stopPreview();
-				ShutterCallback shutterCallback = new ShutterCallback() {
-					public void onShutter() {
-					//	Log.d(TAG, "onShutter'd");
-					}
-				};
-
-				/** Handles data for raw picture */
-				PictureCallback rawCallback = new PictureCallback() {
-					public void onPictureTaken(byte[] data, Camera camera) {
-					//	Log.d(TAG, "onPictureTaken - raw");
-					}
-				};
-
-				/** Handles data for jpeg picture */
-				PictureCallback jpegCallback = new PictureCallback() {
-					public void onPictureTaken(byte[] data, Camera camera) {
-						FileOutputStream outStream = null;
-						try {
-							
-							File mfile=new File(SDCARD_TEMP_JPG);
-							if (mfile.exists())
-							{
-								previewimg.setImageBitmap(null);
-								mfile.delete();
-							}
-							outStream = new FileOutputStream(SDCARD_TEMP_JPG);
-							outStream.write(data);
-							outStream.flush();
-							outStream.close();
-							previewimg.setVisibility(View.VISIBLE);
-							flay.setVisibility(View.GONE);
-							ShowImage();
-							
-						//	Log.d(TAG, "onPictureTaken - wrote bytes: " + data.length);
-						} catch (FileNotFoundException e) {
-							e.printStackTrace();
-						} catch (IOException e) {
-							e.printStackTrace();
-						} finally {
+				if (preview.camera!=null)
+				{
+					preview.camera.stopPreview();
+					ShutterCallback shutterCallback = new ShutterCallback() {
+						public void onShutter() {
+						//	Log.d(TAG, "onShutter'd");
 						}
-					//	Log.d(TAG, "onPictureTaken - jpeg");
-					}
-				};
-				preview.camera.takePicture(shutterCallback, rawCallback, jpegCallback);
-				linear_capture.setVisibility(View.GONE);
-				linear_again.setVisibility(View.VISIBLE);
+					};
+
+					/** Handles data for raw picture */
+					PictureCallback rawCallback = new PictureCallback() {
+						public void onPictureTaken(byte[] data, Camera camera) {
+						//	Log.d(TAG, "onPictureTaken - raw");
+						}
+					};
+
+					/** Handles data for jpeg picture */
+					PictureCallback jpegCallback = new PictureCallback() {
+						public void onPictureTaken(byte[] data, Camera camera) {
+							FileOutputStream outStream = null;
+							try {
+								
+								File mfile=new File(SDCARD_TEMP_JPG);
+								if (mfile.exists())
+								{
+									previewimg.setImageBitmap(null);
+									mfile.delete();
+								}
+								outStream = new FileOutputStream(SDCARD_TEMP_JPG);
+								outStream.write(data);
+								outStream.flush();
+								outStream.close();
+								previewimg.setVisibility(View.VISIBLE);
+								flay.setVisibility(View.GONE);
+								ShowImage();
+								
+							//	Log.d(TAG, "onPictureTaken - wrote bytes: " + data.length);
+							} catch (FileNotFoundException e) {
+								e.printStackTrace();
+							} catch (IOException e) {
+								e.printStackTrace();
+							} finally {
+							}
+						//	Log.d(TAG, "onPictureTaken - jpeg");
+						}
+					};
+					preview.camera.takePicture(shutterCallback, rawCallback, jpegCallback);
+					linear_capture.setVisibility(View.GONE);
+					linear_again.setVisibility(View.VISIBLE);
+				}else
+				{
+					CharSequence text = "Camera dont respond, please, reboot application";
+					int duration = Toast.LENGTH_SHORT;
+					Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+					toast.show();	
+				}
+				
 
 				
 
@@ -234,7 +205,7 @@ public class demotivalcam extends Activity  {
 			public void onClick(View v) {
 				
 				try {
-					generateImage();
+					generateImage(FINAL_IMA_PATH);
 					shareImage();
 					linear_capture.setVisibility(View.VISIBLE);
 					linear_again.setVisibility(View.GONE);
@@ -251,7 +222,7 @@ public class demotivalcam extends Activity  {
 
 			@Override
 			public void onClick(View v) {
-				camera.startPreview();
+				preview.camera.startPreview();
 				ShowPreview();
 				linear_capture.setVisibility(View.VISIBLE);
 				linear_again.setVisibility(View.GONE);
@@ -264,7 +235,19 @@ public class demotivalcam extends Activity  {
 			public void onClick(View v) {
 				//save image, ask for url
 				//camera.startPreview();
+				try {
+				Calendar calendar = Calendar.getInstance();
+				String pathLocal=SDCARD_DIR+"/demotival_"+String.valueOf(calendar.getTime().getTime())+".png";
+				generateImage(pathLocal);
+				CharSequence text = "The image was saved on "+pathLocal;
+				int duration = Toast.LENGTH_SHORT;
+				Toast toast = Toast.makeText(v.getContext(), text, 3);
+				toast.show();
 				ShowImage();
+				} catch (FileNotFoundException e) {
+					waitingDialog.dismiss();
+					e.printStackTrace();
+				}
 				//linear_capture.setVisibility(View.VISIBLE);
 				//slinear_again.setVisibility(View.GONE);
 
@@ -288,7 +271,7 @@ public class demotivalcam extends Activity  {
 	}
 	private void assignXML() {
 		title=(EditText) findViewById(R.id.txt_title);
-		subtitle=(EditText) findViewById(R.id.txt_details);
+	//	subtitle=(EditText) findViewById(R.id.txt_details);
 		flay=(FrameLayout) findViewById(R.id.FrameLayout01);
 		previewimg=(ImageView) findViewById(R.id.image_preview);
 		allView=(RelativeLayout) findViewById(R.id.complete_photo);
@@ -310,33 +293,32 @@ public class demotivalcam extends Activity  {
 		super.onResume();
 		ShowPreview();
 		if (waitingDialog!=null)waitingDialog.dismiss();
-		if(camera==null)	camera = Camera.open();
+		if(preview.camera==null)	preview.camera = Camera.open();
 		else
 		{
-			camera.release();
-			camera.open();
+			preview.camera.release();
+			preview.camera.open();
+			preview.requestLayout();
 		}
-		preview.setCamera(camera);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
 		if (waitingDialog!=null)waitingDialog.dismiss();
-		if (camera != null) {
-			preview.setCamera(null);
-			camera.release();
-			camera = null;
+		if (preview.camera != null) {
+			preview.camera.release();
+			preview.camera = null;
 		}
 	}
 
 
-	private void generateImage() throws FileNotFoundException {
+	private void generateImage(String img_path) throws FileNotFoundException {
 //		Bitmap myBitmap = BitmapFactory.decodeFile(SDCARD_TEMP_JPG);
 		allView.setDrawingCacheEnabled(true);
 		Bitmap bm=allView.getDrawingCache();
 	//	Bitmap ov=overlay(bm, myBitmap);
-		bm.compress(CompressFormat.PNG, 100, new FileOutputStream(String.format(FINAL_IMA_PATH)));
+		bm.compress(CompressFormat.PNG, 100, new FileOutputStream(String.format(img_path)));
 	}
 
 
