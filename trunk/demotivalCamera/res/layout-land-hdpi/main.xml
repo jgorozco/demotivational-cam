@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<RelativeLayout android:layout_alignParentTop="true"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:background="#000000" android:id="@+id/complete_photo" android:layout_marginTop="20px" android:layout_marginLeft="30px" android:layout_marginRight="90px">
+		<RelativeLayout android:id="@+id/RelativeLayout02"
+			android:layout_alignParentTop="true" android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:layout_centerHorizontal="true"
+			android:layout_centerInParent="true" android:background="#ffffff"
+			android:layout_marginLeft="45px" android:layout_marginRight="45px" android:layout_marginTop="25px" android:layout_marginBottom="80px">
+			<AbsoluteLayout android:layout_alignParentTop="true"
+				android:layout_height="fill_parent" android:layout_width="fill_parent"
+				android:background="#ff0000" android:layout_centerHorizontal="true"
+				android:layout_centerInParent="true" android:layout_centerVertical="true"
+				android:layout_marginLeft="2px" android:layout_marginBottom="2px"
+				android:layout_marginRight="2px" android:layout_marginTop="2px">
+
+				<FrameLayout android:orientation="horizontal"
+					android:id="@+id/FrameLayout01" android:layout_height="fill_parent"
+					android:layout_width="fill_parent" android:background="#ffffff">
+				</FrameLayout>
+				<ImageView android:id="@+id/image_preview"
+					android:layout_height="fill_parent" android:layout_width="fill_parent"
+					android:background="#000000"></ImageView>
+			</AbsoluteLayout>
+		</RelativeLayout>
+		<EditText android:id="@+id/txt_details" android:gravity="center"
+			android:background="#000000" android:textColor="#ffffff"
+			android:layout_marginLeft="15px" android:maxWidth="250px"
+			android:imeOptions="actionNext" android:layout_marginRight="15px"
+			android:text="@string/fail_context" android:layout_width="fill_parent"
+			android:typeface="serif" android:layout_alignParentBottom="true"
+			android:layout_height="wrap_content" android:maxLines="2"
+			android:minLines="2" android:onClick="myClickHandler"
+			android:textSize="20px"></EditText>
+		<EditText android:id="@+id/txt_title" android:gravity="center"
+			android:background="#000000" android:layout_height="27px"
+			android:textColor="#ffffff" android:maxWidth="250px"
+			android:maxLines="1" android:imeOptions="actionNext" android:text="@string/fail_title"
+			android:layout_width="fill_parent" android:textSize="24px"
+			android:typeface="serif" android:layout_above="@+id/txt_details"
+			android:layout_alignLeft="@+id/txt_details"
+			android:layout_alignRight="@+id/txt_details"></EditText>
+	</RelativeLayout>
+	
+	
+	<com.admob.android.ads.AdView
+		android:layout_alignParentTop="true" android:id="@+id/ad"
+		android:layout_width="fill_parent" android:layout_height="50px" />
+<LinearLayout android:layout_height="fill_parent" android:id="@+id/la_boton_capt" android:background="#a2a2a2" android:visibility="gone" android:layout_width="wrap_content" android:layout_alignParentRight="true" android:orientation="vertical"><ImageButton android:layout_gravity="center" android:id="@+id/button_capture" android:background="@drawable/button_l" android:layout_height="fill_parent" android:layout_width="wrap_content"></ImageButton>
+</LinearLayout>
+<LinearLayout android:layout_height="fill_parent" android:id="@+id/la_boton_share" android:background="#a2a2a2" android:layout_width="wrap_content" android:layout_alignParentRight="true" android:orientation="vertical"><ImageButton android:id="@+id/button_share" android:background="@drawable/button_l" android:layout_width="wrap_content" android:layout_marginTop="2px" android:layout_marginLeft="0px" android:layout_height="170px"></ImageButton>
+<ImageButton android:layout_width="wrap_content" android:id="@+id/button_capture_again" android:background="@drawable/button_l" android:layout_height="100px" android:layout_marginTop="2px" android:layout_marginLeft="0px"></ImageButton>
+<ImageButton android:id="@+id/button_save" android:background="@drawable/button_l" android:layout_width="wrap_content" android:layout_marginTop="2px" android:layout_marginLeft="0px" android:layout_height="170px"></ImageButton>
+</LinearLayout>
+</RelativeLayout>
