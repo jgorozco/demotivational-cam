@@ -11,6 +11,7 @@ import android.R.drawable;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,8 +22,11 @@ import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -52,19 +56,20 @@ public class demotivalcam extends Activity  {
 	private RelativeLayout allView;
 	private FrameLayout flay;
 	private EditText title;
-//	private EditText subtitle;
+	private EditText subtitle;
 	private ProgressDialog waitingDialog=null;
 
 	private OnClickListener listenerCapture;
 	private OnClickListener listenerSave;
 	private OnClickListener listenerShare;
 	private OnClickListener listenerCaptureAgain;
-	
+	private boolean textState;
+	private boolean isSend;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		textState=false;
 		requestWindowFeature(Window.FEATURE_NO_TITLE); 
 		setContentView(R.layout.main);
 		assignXML();
@@ -81,7 +86,8 @@ public class demotivalcam extends Activity  {
 		ShowPreview();
 		preview = new Preview(this);
 		flay.addView(preview);
-		
+		swichTextState(textState);
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 	}
 
@@ -102,7 +108,7 @@ public class demotivalcam extends Activity  {
 	
 	public void ShowImage()
 	{
-
+		swichTextState(true);
 		previewimg.setVisibility(View.VISIBLE);
 		flay.setVisibility(View.GONE);
 		Bitmap bm=BitmapFactory.decodeFile(SDCARD_TEMP_JPG);
@@ -113,7 +119,13 @@ public class demotivalcam extends Activity  {
 
 	    matrix.postScale(Math.max(scaleWidth, scaleHeight),Math.max(scaleWidth, scaleHeight));
 	    // rotate the Bitmap
-	    matrix.postRotate(90);
+	    Display display = ((WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		if (display.getRotation()==0){
+			matrix.postRotate(90);
+		}
+		if (display.getRotation()==270){
+			matrix.postRotate(180);
+		}	    
 
 	    // recreate the new Bitmap
 	    Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0,
@@ -126,11 +138,22 @@ public class demotivalcam extends Activity  {
 	}
 	public void ShowPreview()
 	{
-		title.setBackgroundColor(0x000000);
+		swichTextState(false);
 		previewimg.setVisibility(View.GONE);
 		flay.setVisibility(View.VISIBLE);
+		linear_capture.setVisibility(View.VISIBLE);
+		linear_again.setVisibility(View.GONE);
+		
 	}
 			
+	private void swichTextState(Boolean state) {
+		title.setEnabled(state);
+		subtitle.setEnabled(state);
+		
+	}
+
+
+
 	private void initListeners() {
 		listenerCapture=new OnClickListener() {
 
@@ -205,10 +228,10 @@ public class demotivalcam extends Activity  {
 			public void onClick(View v) {
 				
 				try {
+					swichTextState(false);
 					generateImage(FINAL_IMA_PATH);
 					shareImage();
-					linear_capture.setVisibility(View.VISIBLE);
-					linear_again.setVisibility(View.GONE);
+
 				} catch (FileNotFoundException e) {
 					waitingDialog.dismiss();
 					e.printStackTrace();
@@ -266,12 +289,13 @@ public class demotivalcam extends Activity  {
 		Uri screenshotUri = Uri.parse("file://"+FINAL_IMA_PATH);
 		sharingIntent.setType("image/png");
 		sharingIntent.putExtra(Intent.EXTRA_STREAM, screenshotUri);
+		Log.d("OOPPS","COMPARTIMOS!");
 		startActivity(Intent.createChooser(sharingIntent, "Share image using"));
 		
 	}
 	private void assignXML() {
 		title=(EditText) findViewById(R.id.txt_title);
-	//	subtitle=(EditText) findViewById(R.id.txt_details);
+		subtitle=(EditText) findViewById(R.id.txt_details);
 		flay=(FrameLayout) findViewById(R.id.FrameLayout01);
 		previewimg=(ImageView) findViewById(R.id.image_preview);
 		allView=(RelativeLayout) findViewById(R.id.complete_photo);
@@ -291,8 +315,30 @@ public class demotivalcam extends Activity  {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		ShowPreview();
+		Log.d("OOPPS","RESUME!");
+		
 		if (waitingDialog!=null)waitingDialog.dismiss();
+		
+
+	}
+
+
+
+
+	@Override
+	protected void onRestart() {
+		Log.d("OOPPS","onRestart!");
+		super.onRestart();
+
+	}
+
+
+
+	@Override
+	protected void onStart() {
+		Log.d("OOPPS","onStart!");
+		super.onStart();
+		ShowPreview();
 		if(preview.camera==null)	preview.camera = Camera.open();
 		else
 		{
@@ -302,10 +348,13 @@ public class demotivalcam extends Activity  {
 		}
 	}
 
+
+
 	@Override
-	protected void onPause() {
-		super.onPause();
-		if (waitingDialog!=null)waitingDialog.dismiss();
+	protected void onStop() {
+		Log.d("OOPPS","onStop!");
+		isSend=true;
+		super.onStop();
 		if (preview.camera != null) {
 			preview.camera.release();
 			preview.camera = null;
@@ -313,11 +362,20 @@ public class demotivalcam extends Activity  {
 	}
 
 
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		isSend=false;
+		Log.d("OOPPS","PAUSE!");
+		if (waitingDialog!=null)waitingDialog.dismiss();
+
+	}
+
+
 	private void generateImage(String img_path) throws FileNotFoundException {
-//		Bitmap myBitmap = BitmapFactory.decodeFile(SDCARD_TEMP_JPG);
 		allView.setDrawingCacheEnabled(true);
 		Bitmap bm=allView.getDrawingCache();
-	//	Bitmap ov=overlay(bm, myBitmap);
 		bm.compress(CompressFormat.PNG, 100, new FileOutputStream(String.format(img_path)));
 	}
 
