@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.security.Timestamp;
 import java.util.Calendar;
 
 import android.R.drawable;
@@ -37,7 +36,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.ImageView.ScaleType;
 
-import com.admob.android.ads.AdView;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 
 public class demotivalcam extends Activity  {
 	private static final String SDCARD_TEMP_JPG = "/mnt/sdcard/DCIM/temp_demotival.jpg";
@@ -65,6 +65,7 @@ public class demotivalcam extends Activity  {
 	private OnClickListener listenerCaptureAgain;
 	private boolean textState;
 	private boolean isSend;
+	private AdView add;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -76,8 +77,7 @@ public class demotivalcam extends Activity  {
 	/*	AdManager.setTestDevices( new String[] {
 				AdManager.TEST_EMULATOR
 				} );*/
-		AdView add=(AdView) findViewById(R.id.ad);
-		add.requestFreshAd();
+		add=(AdView) findViewById(R.id.ad);
 		initListeners();
 		File folder=new File(SDCARD_DIR);
 		if (!folder.exists())folder.mkdir();
@@ -149,6 +149,7 @@ public class demotivalcam extends Activity  {
 	private void swichTextState(Boolean state) {
 		title.setEnabled(state);
 		subtitle.setEnabled(state);
+		add.loadAd(new AdRequest());
 		
 	}
 
