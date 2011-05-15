@@ -76,7 +76,7 @@
 			android:layout_marginLeft="2px" android:minWidth="100px"
 			android:layout_width="fill_parent"></ImageButton>
 	</LinearLayout>
-	<com.admob.android.ads.AdView 
+	<com.google.ads.AdView 
 			android:layout_alignParentTop="true"
 			android:id="@+id/ad"
 			android:layout_width="fill_parent"

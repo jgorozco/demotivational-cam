@@ -46,7 +46,7 @@
 	</RelativeLayout>
 	
 	
-	<com.admob.android.ads.AdView
+	<com.google.ads.AdView 
 		android:layout_alignParentTop="true" android:id="@+id/ad"
 		android:layout_width="fill_parent" android:layout_height="50px" />
 <LinearLayout android:layout_height="fill_parent" android:id="@+id/la_boton_capt" android:background="#a2a2a2" android:visibility="gone" android:layout_width="wrap_content" android:layout_alignParentRight="true" android:orientation="vertical"><ImageButton android:layout_gravity="center" android:id="@+id/button_capture" android:background="@drawable/button_l" android:layout_height="fill_parent" android:layout_width="wrap_content"></ImageButton>
