@@ -4,12 +4,15 @@
 	android:layout_height="fill_parent">
 	<RelativeLayout android:layout_alignParentTop="true"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:background="#000000" android:id="@+id/complete_photo" android:layout_marginTop="20px" android:layout_marginLeft="30px" android:layout_marginRight="90px">
+		android:background="#000000" android:id="@+id/complete_photo"
+		android:layout_marginTop="20px" android:layout_marginLeft="30px"
+		android:layout_marginRight="90px">
 		<RelativeLayout android:id="@+id/RelativeLayout02"
 			android:layout_alignParentTop="true" android:layout_width="fill_parent"
 			android:layout_height="fill_parent" android:layout_centerHorizontal="true"
 			android:layout_centerInParent="true" android:background="#ffffff"
-			android:layout_marginLeft="45px" android:layout_marginRight="45px" android:layout_marginTop="25px" android:layout_marginBottom="80px">
+			android:layout_marginLeft="45px" android:layout_marginRight="45px"
+			android:layout_marginTop="25px" android:layout_marginBottom="80px">
 			<AbsoluteLayout android:layout_alignParentTop="true"
 				android:layout_height="fill_parent" android:layout_width="fill_parent"
 				android:background="#ff0000" android:layout_centerHorizontal="true"
@@ -44,15 +47,35 @@
 			android:layout_alignLeft="@+id/txt_details"
 			android:layout_alignRight="@+id/txt_details"></EditText>
 	</RelativeLayout>
-	
-	
-	<com.google.ads.AdView 
+
+
+	<com.google.ads.AdView
 		android:layout_alignParentTop="true" android:id="@+id/ad"
-		android:layout_width="fill_parent" android:layout_height="50px" />
-<LinearLayout android:layout_height="fill_parent" android:id="@+id/la_boton_capt" android:background="#a2a2a2" android:visibility="gone" android:layout_width="wrap_content" android:layout_alignParentRight="true" android:orientation="vertical"><ImageButton android:layout_gravity="center" android:id="@+id/button_capture" android:background="@drawable/button_l" android:layout_height="fill_parent" android:layout_width="wrap_content"></ImageButton>
-</LinearLayout>
-<LinearLayout android:layout_height="fill_parent" android:id="@+id/la_boton_share" android:background="#a2a2a2" android:layout_width="wrap_content" android:layout_alignParentRight="true" android:orientation="vertical"><ImageButton android:id="@+id/button_share" android:background="@drawable/button_l" android:layout_width="wrap_content" android:layout_marginTop="2px" android:layout_marginLeft="0px" android:layout_height="170px"></ImageButton>
-<ImageButton android:layout_width="wrap_content" android:id="@+id/button_capture_again" android:background="@drawable/button_l" android:layout_height="100px" android:layout_marginTop="2px" android:layout_marginLeft="0px"></ImageButton>
-<ImageButton android:id="@+id/button_save" android:background="@drawable/button_l" android:layout_width="wrap_content" android:layout_marginTop="2px" android:layout_marginLeft="0px" android:layout_height="170px"></ImageButton>
-</LinearLayout>
+		android:layout_width="fill_parent" android:layout_height="50px"
+/>
+	<LinearLayout android:layout_height="fill_parent"
+		android:id="@+id/la_boton_capt" android:background="#a2a2a2"
+		android:visibility="gone" android:layout_width="wrap_content"
+		android:layout_alignParentRight="true" android:orientation="vertical">
+		<ImageButton android:layout_gravity="center" android:id="@+id/button_capture"
+			android:background="@drawable/button_l" android:layout_height="fill_parent"
+			android:layout_width="wrap_content"></ImageButton>
+	</LinearLayout>
+	<LinearLayout android:layout_height="fill_parent"
+		android:id="@+id/la_boton_share" android:background="#a2a2a2"
+		android:layout_width="wrap_content" android:layout_alignParentRight="true"
+		android:orientation="vertical">
+		<ImageButton android:id="@+id/button_share"
+			android:background="@drawable/button_l" android:layout_width="wrap_content"
+			android:layout_marginTop="2px" android:layout_marginLeft="0px"
+			android:layout_height="170px"></ImageButton>
+		<ImageButton android:layout_width="wrap_content"
+			android:id="@+id/button_capture_again" android:background="@drawable/button_l"
+			android:layout_height="100px" android:layout_marginTop="2px"
+			android:layout_marginLeft="0px"></ImageButton>
+		<ImageButton android:id="@+id/button_save"
+			android:background="@drawable/button_l" android:layout_width="wrap_content"
+			android:layout_marginTop="2px" android:layout_marginLeft="0px"
+			android:layout_height="170px"></ImageButton>
+	</LinearLayout>
 </RelativeLayout>
