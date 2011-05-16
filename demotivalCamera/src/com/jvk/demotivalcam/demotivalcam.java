@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Bitmap.CompressFormat;
 import android.hardware.Camera;
@@ -27,6 +28,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -37,6 +39,7 @@ import android.widget.Toast;
 import android.widget.ImageView.ScaleType;
 
 import com.google.ads.AdRequest;
+import com.google.ads.AdSize;
 import com.google.ads.AdView;
 
 public class demotivalcam extends Activity  {
@@ -78,6 +81,14 @@ public class demotivalcam extends Activity  {
 				AdManager.TEST_EMULATOR
 				} );*/
 		add=(AdView) findViewById(R.id.ad);
+		AdView add2=new AdView(this, AdSize.BANNER, "a14d5c0e9961d53");
+		LayoutParams lp = add.getLayoutParams();
+		RelativeLayout rl=(RelativeLayout) add.getParent();
+		rl.addView(add2,lp);
+		rl.removeView(add);
+		add=add2;
+		add.setBackgroundColor(Color.BLUE);
+		add.loadAd(new AdRequest());
 		initListeners();
 		File folder=new File(SDCARD_DIR);
 		if (!folder.exists())folder.mkdir();
