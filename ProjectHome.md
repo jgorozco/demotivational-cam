@@ -1,0 +1,1 @@
+demotivational camera, simple code, to add more features
